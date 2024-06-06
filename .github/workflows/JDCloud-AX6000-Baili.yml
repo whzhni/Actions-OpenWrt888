@@ -19,29 +19,6 @@ on:
         required: true
         default: true
         type: boolean
-      WA_FW:
-        description: 'Choose mt_wifi firmware'
-        required: false
-        default: 'mt7986-fw-20230808'
-        type: choice
-        options:
-        - no-new-fw
-        - mt7986-fw-20221208
-        - mt7986-fw-jdc
-        - mt7986-fw-20230421
-        - mt7986-fw-20230808
-        - mt7986-fw-20231024
-      WO_FW:
-        description: 'Choose warp firmware'
-        required: false
-        default: 'mt7986-fw-20230808'
-        type: choice
-        options:
-        - no-new-fw
-        - mt7986-fw-jdc
-        - mt7986-fw-20230421
-        - mt7986-fw-20230808
-        - mt7986-fw-20231024
       GSW:
         description: 'Use GSW switch driver (non-DSA)'
         required: true
@@ -158,22 +135,6 @@ jobs:
         ## 将文本内容写入02_network
         sed -i '/mediatek_setup_macs()/,/\};/ {/jdcloud,re-cp-03)/ {n;n;n;r temp_insert.txt
         }}' target/linux/mediatek/mt7986/base-files/etc/board.d/02_network
-        
-    - name: 选择无线firmware
-      run: |
-        cp -r JDCloud-AX6000-Baili/firmware/mt_wifi/mt7986-fw-jdc immortalwrt/package/mtk/drivers/mt_wifi/files
-        cp -r JDCloud-AX6000-Baili/firmware/warp/mt7986-fw-jdc immortalwrt/package/mtk/drivers/warp/files
-        cd immortalwrt
-        if [ ${{ github.event.inputs.WA_FW }} == 'no-new-fw' ]; then
-                sed -i '/CONFIG_MTK_MT7986_NEW_FW=y/d' .config
-        else
-                sed -i 's/^MT7986_FW_DIR := mt7986-fw.*/MT7986_FW_DIR := ${{github.event.inputs.WA_FW}}/g' package/mtk/drivers/mt_wifi/Makefile
-        fi
-        if [ ${{ github.event.inputs.WO_FW }} == 'no-new-fw' ]; then
-                sed -i '/CONFIG_WARP_NEW_FW=y/d' .config
-        else
-                sed -i 's/^MT7986_NEW_WOFW_DIR := mt7986-fw.*/MT7986_NEW_WOFW_DIR := ${{github.event.inputs.WO_FW}}/g' package/mtk/drivers/warp/Makefile
-        fi
         
     - name: 使用GSW交换机驱动（非DSA）
       if: github.event.inputs.GSW == 'true'
