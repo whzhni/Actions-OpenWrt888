@@ -67,7 +67,7 @@ on:
 env:
   ###############手动修改##############
   OPENWRT_NAME: immortalwrt #hanwckf
-  REPO_URL: https://github.com/immortalwrt/immortalwrt #https://github.com/hanwckf/immortalwrt-mt798x
+  REPO_URL: https://github.com/immortalwrt/immortalwrt/tree/master #https://github.com/hanwckf/immortalwrt-mt798x
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: JDCloud-AX6000-Baili/.mtwifi-cfg.config
