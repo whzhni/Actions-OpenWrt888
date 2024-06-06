@@ -21,7 +21,7 @@ on:
         type: boolean
       WA_FW:
         description: 'Choose mt_wifi firmware'
-        required: true
+        required: false
         default: 'mt7986-fw-20230808'
         type: choice
         options:
@@ -33,7 +33,7 @@ on:
         - mt7986-fw-20231024
       WO_FW:
         description: 'Choose warp firmware'
-        required: true
+        required: false
         default: 'mt7986-fw-20230808'
         type: choice
         options:
